@@ -1,6 +1,6 @@
 
 exports.seed = function(knex) {
-  return knex('steps').insert([
+  return knex('step').insert([
     { scheme_id: 1, step_number: 1, instructions: 'solve prime number theory'},
     { scheme_id: 1, step_number: 2, instructions: 'crack cyber security'},
     { scheme_id: 1, step_number: 1, instructions: 'blackmail world leaders'},

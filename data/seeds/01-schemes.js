@@ -1,6 +1,6 @@
 
 exports.seed = function(knex) {
-  return knex('schemes').insert([
+  return knex('scheme').insert([
     {scheme_name: 'World Domination'},
     {scheme_name: 'Get Rich Quick'},
     {scheme_name: 'Revenge'},

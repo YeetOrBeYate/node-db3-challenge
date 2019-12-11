@@ -1,13 +1,13 @@
 
 exports.up = function(knex) {
   return knex.schema
-    .createTable('schemes', tbl => {
+    .createTable('scheme', tbl => {
       tbl.increments();
       tbl.text('scheme_name', 128)
         .unique()
         .notNullable();
     })
-    .createTable('steps', tbl => {
+    .createTable('step', tbl => {
       tbl.increments();
       tbl.integer('step_number')
         .unsigned()
@@ -18,7 +18,7 @@ exports.up = function(knex) {
         .unsigned()
         .notNullable()
         .references('id')
-        .inTable('schemes')
+        .inTable('scheme')
         .onUpdate('CASCADE')
         .onDelete('CASCADE');
     });
@@ -26,6 +26,6 @@ exports.up = function(knex) {
 
 exports.down = function(knex) {
   return knex.schema
-    .dropTableIfExists('steps')
-    .dropTableIfExists('schemes');
+    .dropTableIfExists('step')
+    .dropTableIfExists('scheme');
 };
