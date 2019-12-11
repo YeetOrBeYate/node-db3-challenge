@@ -28,9 +28,36 @@ const AddScheme = (scheme)=>{
     })
 }
 
+const AddSchemeStep = (step, schemeID)=>{
+    return DB('step')
+    .insert(step, "id")
+    .then(ids=>{
+        return findSteps(schemeID)
+    })
+}
+
+const EditScheme = async (changes, id)=>{
+    await DB('scheme')
+    .update(changes)
+    .where("id", id)
+
+    return findById(id)
+
+}
+
+const RemoveScheme = (id)=>{
+    return DB('scheme')
+    .where("id", id)
+    .del()
+
+}
+
 module.exports={
     find,
     findById,
     findSteps,
-    AddScheme
+    AddScheme,
+    AddSchemeStep,
+    EditScheme,
+    RemoveScheme
 }
