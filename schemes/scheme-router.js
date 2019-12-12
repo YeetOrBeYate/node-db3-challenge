@@ -49,7 +49,7 @@ router.get('/:id/steps', (req, res) => {
 router.post('/', (req, res) => {
   const schemeData = req.body;
 
-  Schemes.add(schemeData)
+  Schemes.AddScheme(schemeData)
   .then(scheme => {
     res.status(201).json(scheme);
   })
@@ -62,19 +62,16 @@ router.post('/:id/steps', (req, res) => {
   const stepData = req.body;
   const { id } = req.params; 
 
-  Schemes.findById(id)
-  .then(scheme => {
-    if (scheme) {
-      Schemes.addStep(stepData, id)
-      .then(step => {
-        res.status(201).json(step);
-      })
+  Schemes.AddSchemeStep(stepData, id)
+  .then(steps => {
+    if (steps.length) {
+      res.json(steps);
     } else {
-      res.status(404).json({ message: 'Could not find scheme with given id.' })
+      res.status(404).json({ message: 'Scheme id you put in the url does not exist' })
     }
   })
-  .catch (err => {
-    res.status(500).json({ message: 'Failed to create new step' });
+  .catch(err => {
+    res.status(500).json({ message: 'Failed to get steps' });
   });
 });
 
@@ -85,7 +82,7 @@ router.put('/:id', (req, res) => {
   Schemes.findById(id)
   .then(scheme => {
     if (scheme) {
-      Schemes.update(changes, id)
+      Schemes.EditScheme(changes, id)
       .then(updatedScheme => {
         res.json(updatedScheme);
       });
@@ -101,10 +98,10 @@ router.put('/:id', (req, res) => {
 router.delete('/:id', (req, res) => {
   const { id } = req.params;
 
-  Schemes.remove(id)
+  Schemes.RemoveScheme(id)
   .then(deleted => {
     if (deleted) {
-      res.json({ removed: deleted });
+      res.json({ removed: `${deleted} Scheme my King` });
     } else {
       res.status(404).json({ message: 'Could not find scheme with given id' });
     }
